@@ -49,7 +49,7 @@ function IconTopup() {
 }
 
 const miniPrograms = [
-  { logo: "/logos/scbeasy.svg",   name: "SCB Easy",   href: "#",     color: "#4B1FA8", bg: "#EDE9FE", active: false },
+  { logo: "/logos/scbeasy.png",   name: "SCB Easy",   href: "#",     color: "#4B1FA8", bg: "#EDE9FE", active: false },
   { logo: "/logos/starbucks.svg", name: "Starbucks",  href: "/scan", color: "#00704A", bg: "#DCFCE7", active: true  },
   { logo: "/logos/onetwo.png",    name: "1:2 Coffee", href: "#",     color: "#6F3D1F", bg: "#FEF3C7", active: false },
   { logo: "/logos/mk.png",        name: "MK",         href: "#",     color: "#C41E3A", bg: "#FEE2E2", active: false },
