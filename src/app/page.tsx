@@ -49,10 +49,12 @@ function IconTopup() {
 }
 
 const miniPrograms = [
-  { emoji: "☕", name: "Starbucks", href: "/scan", color: "#00704A", bg: "#DCFCE7", active: true  },
-  { emoji: "🍜", name: "MK",        href: "#",     color: "#C41E3A", bg: "#FEE2E2", active: false },
-  { emoji: "🍕", name: "Pizza Hut", href: "#",     color: "#C8181A", bg: "#FEE2E2", active: false },
-  { emoji: "✈️", name: "Thai Air",  href: "#",     color: "#4B0082", bg: "#EDE9FE", active: false },
+  { emoji: "🏦", name: "SCB Easy",   href: "#",     color: "#4B1FA8", bg: "#EDE9FE", active: false },
+  { emoji: "☕", name: "Starbucks",  href: "/scan", color: "#00704A", bg: "#DCFCE7", active: true  },
+  { emoji: "☕", name: "1:2 Coffee", href: "#",     color: "#6F3D1F", bg: "#FEF3C7", active: false },
+  { emoji: "🍜", name: "MK",         href: "#",     color: "#C41E3A", bg: "#FEE2E2", active: false },
+  { emoji: "🍕", name: "Pizza Hut",  href: "#",     color: "#C8181A", bg: "#FEE2E2", active: false },
+  { emoji: "✈️", name: "Thai Air",   href: "#",     color: "#4B0082", bg: "#EDE9FE", active: false },
 ];
 
 const recentTx = [
