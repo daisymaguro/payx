@@ -49,12 +49,12 @@ function IconTopup() {
 }
 
 const miniPrograms = [
-  { emoji: "🏦", name: "SCB Easy",   href: "#",     color: "#4B1FA8", bg: "#EDE9FE", active: false },
-  { emoji: "☕", name: "Starbucks",  href: "/scan", color: "#00704A", bg: "#DCFCE7", active: true  },
-  { emoji: "☕", name: "1:2 Coffee", href: "#",     color: "#6F3D1F", bg: "#FEF3C7", active: false },
-  { emoji: "🍜", name: "MK",         href: "#",     color: "#C41E3A", bg: "#FEE2E2", active: false },
-  { emoji: "🍕", name: "Pizza Hut",  href: "#",     color: "#C8181A", bg: "#FEE2E2", active: false },
-  { emoji: "✈️", name: "Thai Air",   href: "#",     color: "#4B0082", bg: "#EDE9FE", active: false },
+  { logo: "/logos/scbeasy.svg",   name: "SCB Easy",   href: "#",     color: "#4B1FA8", bg: "#EDE9FE", active: false },
+  { logo: "/logos/starbucks.svg", name: "Starbucks",  href: "/scan", color: "#00704A", bg: "#DCFCE7", active: true  },
+  { logo: "/logos/onetwo.png",    name: "1:2 Coffee", href: "#",     color: "#6F3D1F", bg: "#FEF3C7", active: false },
+  { logo: "/logos/mk.png",        name: "MK",         href: "#",     color: "#C41E3A", bg: "#FEE2E2", active: false },
+  { logo: "/logos/pizzahut.svg",  name: "Pizza Hut",  href: "#",     color: "#C8181A", bg: "#FEE2E2", active: false },
+  { logo: "/logos/thaiair.svg",   name: "Thai Air",   href: "#",     color: "#4B0082", bg: "#EDE9FE", active: false },
 ];
 
 const recentTx = [
@@ -162,16 +162,18 @@ export default function Home() {
               className="flex items-center gap-3 px-3 py-3 rounded-2xl active:scale-95 transition-transform"
               style={{
                 background: mp.active ? mp.bg : "white",
-                boxShadow: mp.active
-                  ? `0 4px 16px ${mp.color}20`
-                  : "0 1px 4px rgba(0,0,0,0.05)",
+                boxShadow: mp.active ? `0 4px 16px ${mp.color}25` : "0 1px 4px rgba(0,0,0,0.05)",
                 border: mp.active ? `1.5px solid ${mp.color}30` : "1.5px solid transparent",
+                opacity: mp.active ? 1 : 0.6,
               }}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
-                style={{ background: mp.active ? mp.color + "20" : "#F5F0FF" }}>
-                {mp.emoji}
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
+                style={{ background: "white", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={mp.logo} alt={mp.name}
+                  className="w-8 h-8 object-contain"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               </div>
-              <span className="font-bold text-sm" style={{ color: mp.active ? "#1A0A3D" : "#9CA3AF" }}>
+              <span className="font-bold text-sm" style={{ color: mp.active ? "#1A0A3D" : "#6B7280" }}>
                 {mp.name}
               </span>
             </Link>
@@ -202,7 +204,11 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <span className="text-6xl">☕</span>
+              <div className="w-20 h-20 rounded-2xl overflow-hidden flex items-center justify-center bg-white p-1 shrink-0"
+                style={{ boxShadow: "0 4px 12px rgba(0,112,74,0.2)" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logos/starbucks.svg" alt="Starbucks" className="w-16 h-16 object-contain" />
+              </div>
             </div>
           </div>
         </Link>
