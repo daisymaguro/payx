@@ -2,23 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Check, Shield, ChevronRight, X } from "lucide-react";
+import { Check, Shield, ChevronRight, X, Tag } from "lucide-react";
 import { useStore, useCartTotal } from "@/lib/store";
-import { paymentMethods } from "@/lib/data";
 import MiniProgramShell from "@/components/MiniProgramShell";
 
 function WeChatPayModal({ amount, onClose, onSuccess }: { amount: number; onClose: () => void; onSuccess: () => void }) {
   const [step, setStep] = useState<"qr" | "processing" | "done">("qr");
-
   const handlePay = () => {
     setStep("processing");
     setTimeout(() => { setStep("done"); setTimeout(onSuccess, 900); }, 1800);
   };
-
   return (
     <div className="fixed inset-0 z-50 flex items-end" style={{ background: "rgba(0,0,0,0.7)" }}>
-      <div className="w-full max-w-sm mx-auto rounded-t-3xl overflow-hidden slide-up"
-        style={{ background: "#1AAD19" }}>
+      <div className="w-full max-w-sm mx-auto rounded-t-3xl overflow-hidden slide-up" style={{ background: "#1AAD19" }}>
         <div className="flex items-center justify-between px-5 pt-5 pb-4">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
@@ -26,23 +22,17 @@ function WeChatPayModal({ amount, onClose, onSuccess }: { amount: number; onClos
             </div>
             <span className="text-white font-bold text-base">WeChat Pay</span>
           </div>
-          <button onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(255,255,255,0.2)" }}>
+          <button onClick={onClose} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
             <X size={16} className="text-white" />
           </button>
         </div>
-
         <div className="bg-white rounded-t-3xl px-6 pt-6 pb-8">
           {step === "qr" && (
             <>
               <p className="text-center text-gray-400 text-xs mb-1">ยอดชำระ</p>
-              <p className="text-center font-black text-4xl mb-5" style={{ color: "#1E3932" }}>
-                ฿{amount.toLocaleString()}
-              </p>
+              <p className="text-center font-black text-4xl mb-5" style={{ color: "#1E3932" }}>฿{amount.toLocaleString()}</p>
               <div className="flex justify-center mb-5">
-                <div className="w-44 h-44 rounded-2xl p-3 relative"
-                  style={{ background: "#F9F9F9", border: "2px solid #E5E5E5" }}>
+                <div className="w-44 h-44 rounded-2xl p-3 relative" style={{ background: "#F9F9F9", border: "2px solid #E5E5E5" }}>
                   <div className="w-full h-full grid grid-cols-9 gap-0.5">
                     {Array.from({ length: 81 }).map((_, i) => {
                       const r = Math.floor(i / 9), c = i % 9;
@@ -52,33 +42,25 @@ function WeChatPayModal({ amount, onClose, onSuccess }: { amount: number; onClos
                     })}
                   </div>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow">
-                      <span className="text-lg">💚</span>
-                    </div>
+                    <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow"><span className="text-lg">💚</span></div>
                   </div>
                 </div>
               </div>
-              <p className="text-center text-xs text-gray-400 mb-5">
-                เปิด WeChat แสกน QR หรือกดปุ่มด้านล่าง (Demo)
-              </p>
-              <button onClick={handlePay}
-                className="w-full py-3.5 rounded-2xl font-bold text-white text-base"
-                style={{ background: "#1AAD19" }}>
+              <p className="text-center text-xs text-gray-400 mb-5">เปิด WeChat แสกน QR หรือกดปุ่มด้านล่าง (Demo)</p>
+              <button onClick={handlePay} className="w-full py-3.5 rounded-2xl font-bold text-white text-base" style={{ background: "#1AAD19" }}>
                 ยืนยันชำระ ฿{amount.toLocaleString()}
               </button>
             </>
           )}
           {step === "processing" && (
             <div className="flex flex-col items-center py-10 gap-4">
-              <div className="w-14 h-14 border-4 rounded-full animate-spin"
-                style={{ borderColor: "#D4E9E2", borderTopColor: "#1AAD19" }} />
+              <div className="w-14 h-14 border-4 rounded-full animate-spin" style={{ borderColor: "#D4E9E2", borderTopColor: "#1AAD19" }} />
               <p className="font-bold text-gray-700">กำลังประมวลผล...</p>
             </div>
           )}
           {step === "done" && (
             <div className="flex flex-col items-center py-10 gap-3 fade-up">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center"
-                style={{ background: "#1AAD19" }}>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "#1AAD19" }}>
                 <Check size={32} className="text-white" />
               </div>
               <p className="font-black text-gray-800 text-lg">ชำระสำเร็จ!</p>
@@ -90,9 +72,15 @@ function WeChatPayModal({ amount, onClose, onSuccess }: { amount: number; onClos
   );
 }
 
+const DISCOUNT = 50;
+
 const allPaymentMethods = [
-  ...paymentMethods,
-  { id: "wechat_pay", name: "WeChat Pay", emoji: "💚", balance: null },
+  { id: "payx_wallet", name: "PayX Wallet", emoji: "💜", balance: 2500, discount: true, tag: "แนะนำ", sub: "ยอดคงเหลือ ฿2,500" },
+  { id: "cardx",       name: "CardX",       emoji: "💳", balance: null, discount: true, tag: "พิเศษ", sub: "บัตรเครดิต SCB" },
+  { id: "starbucks_card", name: "Starbucks Card", emoji: "🟢", balance: 850, discount: false, tag: null, sub: "ยอดคงเหลือ ฿850" },
+  { id: "promptpay",   name: "PromptPay",   emoji: "📱", balance: null, discount: false, tag: null, sub: null },
+  { id: "credit_card", name: "บัตรเครดิต/เดบิต", emoji: "🏦", balance: null, discount: false, tag: null, sub: null },
+  { id: "wechat_pay",  name: "WeChat Pay",  emoji: "💚", balance: null, discount: false, tag: null, sub: "เปิด WeChat Pay ในแอป" },
 ];
 
 export default function PaymentPage() {
@@ -100,15 +88,17 @@ export default function PaymentPage() {
   const { state, dispatch } = useStore();
   const subtotal = useCartTotal(state.cart);
   const serviceCharge = Math.round(subtotal * 0.07);
-  const grandTotal = subtotal + serviceCharge;
+  const baseTotal = subtotal + serviceCharge;
+
+  const selectedMethod = allPaymentMethods.find((m) => m.id === state.selectedPayment);
+  const hasDiscount = selectedMethod?.discount ?? false;
+  const grandTotal = hasDiscount ? Math.max(0, baseTotal - DISCOUNT) : baseTotal;
   const starsEarned = Math.floor(grandTotal / 25);
 
   const [processing, setProcessing] = useState(false);
   const [pinStep, setPinStep] = useState(false);
   const [pin, setPin] = useState("");
   const [showWechat, setShowWechat] = useState(false);
-
-  const selectedMethod = allPaymentMethods.find((m) => m.id === state.selectedPayment);
 
   const handlePay = () => {
     if (state.selectedPayment === "wechat_pay") { setShowWechat(true); return; }
@@ -122,36 +112,49 @@ export default function PaymentPage() {
     <MiniProgramShell appName="Starbucks" appEmoji="☕" accentColor="#1E3932">
       <div style={{ background: "#F2F0EB", minHeight: "100%" }}>
 
-        <div className="flex items-center gap-3 px-5 py-4 bg-white"
-          style={{ boxShadow: "0 1px 0 #D4E9E2" }}>
-          <h1 className="font-bold text-gray-800 text-base flex-1">
-            {pinStep ? "ยืนยันตัวตน" : "ชำระเงิน"}
-          </h1>
-          <div className="flex items-center gap-1 text-xs font-medium text-green-600">
-            <Shield size={13} /> ปลอดภัย
-          </div>
+        <div className="flex items-center gap-3 px-5 py-4 bg-white" style={{ boxShadow: "0 1px 0 #D4E9E2" }}>
+          <h1 className="font-bold text-gray-800 text-base flex-1">{pinStep ? "ยืนยันตัวตน" : "ชำระเงิน"}</h1>
+          <div className="flex items-center gap-1 text-xs font-medium text-green-600"><Shield size={13} /> ปลอดภัย</div>
         </div>
 
         <div className="pb-36">
           {!pinStep ? (
             <div className="px-4 py-4 space-y-3">
-              {/* Amount */}
-              <div className="relative overflow-hidden rounded-2xl px-5 py-6 text-center"
+
+              {/* Amount hero */}
+              <div className="relative overflow-hidden rounded-2xl px-5 py-5 text-center"
                 style={{ background: "linear-gradient(155deg, #1E3932 0%, #006241 60%, #00704A 100%)" }}>
                 <div className="shimmer absolute inset-0 rounded-2xl" />
-                <p className="relative text-white/50 text-xs uppercase tracking-widest font-semibold mb-2">ยอดชำระ</p>
-                <p className="relative text-white text-5xl font-black">฿{grandTotal.toLocaleString()}</p>
+                <p className="relative text-white/50 text-xs uppercase tracking-widest font-semibold mb-1">ยอดชำระ</p>
+
+                {hasDiscount ? (
+                  <div className="relative flex items-center justify-center gap-2">
+                    <span className="text-white/40 text-xl font-bold line-through">฿{baseTotal.toLocaleString()}</span>
+                    <span className="text-white text-4xl font-black">฿{grandTotal.toLocaleString()}</span>
+                  </div>
+                ) : (
+                  <p className="relative text-white text-4xl font-black">฿{grandTotal.toLocaleString()}</p>
+                )}
+
+                {hasDiscount && (
+                  <div className="relative mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full"
+                    style={{ background: "rgba(203,162,88,0.25)" }}>
+                    <Tag size={11} style={{ color: "#F1D592" }} />
+                    <span className="text-xs font-bold" style={{ color: "#F1D592" }}>ประหยัด ฿{DISCOUNT} จาก {selectedMethod?.name}</span>
+                  </div>
+                )}
+
                 <p className="relative text-white/40 text-xs mt-2">
                   Starbucks · สยาม พารากอน · โต๊ะ {state.tableNumber}
                 </p>
-                <div className="relative mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-                  style={{ background: "rgba(203,162,88,0.2)" }}>
+                <div className="relative mt-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-full"
+                  style={{ background: "rgba(203,162,88,0.15)" }}>
                   <span style={{ color: "#CBA258" }}>★</span>
-                  <span className="text-xs font-bold" style={{ color: "#F1D592" }}>+{starsEarned} PointX Stars</span>
+                  <span className="text-xs font-semibold" style={{ color: "#F1D592" }}>+{starsEarned} PointX Stars</span>
                 </div>
               </div>
 
-              {/* Order list */}
+              {/* Order summary */}
               <div className="bg-white rounded-2xl p-4" style={{ boxShadow: "0 2px 12px rgba(30,57,50,0.06)" }}>
                 <p className="font-bold text-xs uppercase tracking-wide mb-3" style={{ color: "#006241" }}>รายการ</p>
                 {state.cart.map((c) => (
@@ -166,13 +169,63 @@ export default function PaymentPage() {
                 <div className="flex justify-between text-xs text-gray-400 pt-2">
                   <span>ค่าบริการ 7%</span><span>฿{serviceCharge}</span>
                 </div>
+                {hasDiscount && (
+                  <div className="flex justify-between text-xs font-bold pt-1" style={{ color: "#00704A" }}>
+                    <span className="flex items-center gap-1"><Tag size={10} /> ส่วนลด {selectedMethod?.name}</span>
+                    <span>-฿{DISCOUNT}</span>
+                  </div>
+                )}
               </div>
 
               {/* Payment methods */}
               <div className="bg-white rounded-2xl p-4" style={{ boxShadow: "0 2px 12px rgba(30,57,50,0.06)" }}>
                 <p className="font-bold text-xs uppercase tracking-wide mb-3" style={{ color: "#006241" }}>วิธีชำระ</p>
+
+                {/* Featured: PayX Wallet & CardX */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  {allPaymentMethods.filter(m => m.discount).map((method) => {
+                    const active = state.selectedPayment === method.id;
+                    return (
+                      <button key={method.id}
+                        onClick={() => dispatch({ type: "SET_PAYMENT", method: method.id })}
+                        className="relative flex flex-col items-start p-3 rounded-2xl transition-all text-left"
+                        style={{
+                          background: active ? "linear-gradient(135deg, #1E3932, #006241)" : "#F2F0EB",
+                          border: `2px solid ${active ? "#00704A" : "transparent"}`,
+                        }}>
+                        {/* Discount badge */}
+                        <span className="absolute -top-2 -right-1 text-xs font-black px-2 py-0.5 rounded-full"
+                          style={{ background: "#CBA258", color: "white" }}>
+                          -฿{DISCOUNT}
+                        </span>
+                        <span className="text-2xl mb-2">{method.emoji}</span>
+                        <p className={`font-black text-sm ${active ? "text-white" : "text-gray-800"}`}>{method.name}</p>
+                        <p className={`text-xs mt-0.5 ${active ? "text-white/60" : "text-gray-400"}`}>{method.sub}</p>
+                        {active && (
+                          <div className="absolute top-2 left-2 w-4 h-4 rounded-full flex items-center justify-center"
+                            style={{ background: "#CBA258" }}>
+                            <Check size={9} className="text-white" />
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Discount reminder */}
+                {!hasDiscount && (
+                  <div className="mb-3 rounded-xl px-3 py-2.5 flex items-center gap-2"
+                    style={{ background: "rgba(203,162,88,0.1)", border: "1px dashed #CBA258" }}>
+                    <Tag size={13} style={{ color: "#CBA258" }} />
+                    <p className="text-xs font-semibold" style={{ color: "#9B7121" }}>
+                      เลือก PayX Wallet หรือ CardX รับส่วนลด ฿{DISCOUNT} ทันที
+                    </p>
+                  </div>
+                )}
+
+                {/* Other methods */}
                 <div className="space-y-2">
-                  {allPaymentMethods.map((method) => {
+                  {allPaymentMethods.filter(m => !m.discount).map((method) => {
                     const active = state.selectedPayment === method.id;
                     const isWechat = method.id === "wechat_pay";
                     return (
@@ -186,15 +239,12 @@ export default function PaymentPage() {
                         <span className="text-2xl">{method.emoji}</span>
                         <div className="flex-1 text-left">
                           <p className="text-sm font-bold text-gray-800">{method.name}</p>
-                          {method.balance !== null
-                            ? <p className="text-xs text-gray-400">ยอดคงเหลือ ฿{method.balance?.toLocaleString()}</p>
-                            : isWechat
-                            ? <p className="text-xs" style={{ color: "#1AAD19" }}>เปิด WeChat Pay ในแอป</p>
-                            : null}
+                          {method.sub && (
+                            <p className="text-xs" style={{ color: isWechat && active ? "#1AAD19" : "#9CA3AF" }}>{method.sub}</p>
+                          )}
                         </div>
                         {isWechat && !active && (
-                          <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                            style={{ background: "#E8F8E8", color: "#1AAD19" }}>NEW</span>
+                          <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "#E8F8E8", color: "#1AAD19" }}>NEW</span>
                         )}
                         {active && (
                           <div className="w-5 h-5 rounded-full flex items-center justify-center"
@@ -217,6 +267,9 @@ export default function PaymentPage() {
                 </div>
                 <p className="font-black text-gray-800 text-lg">ใส่รหัส PIN</p>
                 <p className="text-gray-400 text-sm mt-1">ยืนยันผ่าน {selectedMethod?.emoji} {selectedMethod?.name}</p>
+                {hasDiscount && (
+                  <p className="text-xs font-bold mt-1" style={{ color: "#CBA258" }}>ส่วนลด ฿{DISCOUNT} ถูกใช้แล้ว ✓</p>
+                )}
               </div>
               <div className="flex gap-3.5">
                 {Array.from({ length: 6 }).map((_, i) => (
@@ -241,13 +294,24 @@ export default function PaymentPage() {
           )}
         </div>
 
+        {/* Pay button */}
         <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-white px-4 py-5"
           style={{ borderTop: "1px solid #D4E9E2" }}>
+          {hasDiscount && !pinStep && (
+            <div className="flex items-center justify-center gap-1.5 mb-2">
+              <Tag size={12} style={{ color: "#CBA258" }} />
+              <p className="text-xs font-semibold" style={{ color: "#9B7121" }}>
+                ราคาหลังส่วนลด ฿{grandTotal.toLocaleString()} (ประหยัด ฿{DISCOUNT})
+              </p>
+            </div>
+          )}
           <button onClick={handlePay}
             disabled={processing || (pinStep && pin.length < 4)}
             className="relative overflow-hidden w-full text-white rounded-2xl py-4 flex items-center justify-center gap-2.5 font-bold text-base active:scale-98 disabled:opacity-50"
             style={{
-              background: state.selectedPayment === "wechat_pay" ? "#1AAD19" : "linear-gradient(135deg, #1E3932, #006241)",
+              background: state.selectedPayment === "wechat_pay" ? "#1AAD19"
+                : hasDiscount ? "linear-gradient(135deg, #1E3932, #006241)"
+                : "linear-gradient(135deg, #1E3932, #006241)",
               boxShadow: "0 8px 24px rgba(30,57,50,0.3)"
             }}>
             <div className="shimmer absolute inset-0 rounded-2xl" />
