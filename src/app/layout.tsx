@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="th">
-      <body style={{ background: "#0D0520" }}>
+      <body style={{ background: "#F5F0FF" }}>
         <StoreProvider>
-          <div className="max-w-sm mx-auto relative overflow-hidden shadow-2xl"
-            style={{ minHeight: "100svh", background: "#0D0520" }}>
+          <div className="max-w-sm mx-auto relative overflow-hidden"
+            style={{ minHeight: "100svh", background: "#F5F0FF", boxShadow: "0 0 60px rgba(124,58,237,0.08)" }}>
             {children}
           </div>
         </StoreProvider>

@@ -3,28 +3,29 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Circular', 'Segoe UI', sans-serif;
-  background: #0D0520;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #F5F0FF;
   -webkit-font-smoothing: antialiased;
-  color: white;
+  color: #1A0A3D;
 }
 
 :root {
-  /* PayX Spotify-Purple palette */
-  --px-bg:       #0D0520;
-  --px-surface:  #1A0D35;
-  --px-card:     #231248;
-  --px-purple:   #7C3AED;
-  --px-bright:   #A855F7;
-  --px-light:    #C084FC;
-  --px-dim:      #4C1D95;
-  --px-gold:     #C9A84C;
-  --px-gold-lt:  #F0D080;
-  --px-muted:    #B3B3B3;
-  --px-subtle:   rgba(255,255,255,0.06);
+  --px-bg:        #F5F0FF;
+  --px-surface:   #FFFFFF;
+  --px-border:    rgba(124,58,237,0.1);
+  --px-purple:    #7C3AED;
+  --px-bright:    #9333EA;
+  --px-light:     #A855F7;
+  --px-soft:      #EDE9FE;
+  --px-softer:    #F5F3FF;
+  --px-dim:       #4C1D95;
+  --px-gold:      #C9A84C;
+  --px-gold-lt:   #F0D080;
+  --px-text:      #1A0A3D;
+  --px-muted:     #6B7280;
+  --px-subtle:    rgba(124,58,237,0.06);
 }
 
-/* ── Animations ── */
 @keyframes scanLine {
   0%   { top: 8%; }
   50%  { top: 88%; }
@@ -61,7 +62,7 @@ body {
   100% { background-position:  200% center; }
 }
 .shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
   background-size: 200% auto;
   animation: shimmer 2.5s linear infinite;
 }
@@ -74,8 +75,8 @@ body {
 .stars-pop { animation: starsPop 0.55s cubic-bezier(.34,1.56,.64,1) forwards; }
 
 @keyframes pulse-ring {
-  0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(168,85,247,0.5); }
-  70%  { transform: scale(1);    box-shadow: 0 0 0 12px rgba(168,85,247,0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(168,85,247,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(124,58,237,0.35); }
+  70%  { box-shadow: 0 0 0 12px rgba(124,58,237,0); }
+  100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
 }
 .pulse-ring { animation: pulse-ring 2s ease-in-out infinite; }
