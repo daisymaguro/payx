@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Bell, Scan, ArrowUpRight, ArrowDownLeft, Plus, Clock } from "lucide-react";
+import { ChevronRight, Bell, Scan, ArrowUpRight, ArrowDownLeft, Plus, Clock, Zap, Wifi, Phone, Car, Store } from "lucide-react";
 
 function IconWallet() {
   return (
@@ -179,6 +179,60 @@ export default function Home() {
             </Link>
           ))}
         </div>
+      </div>
+
+      {/* ── Services ── */}
+      <div className="px-4 mt-6">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-black text-lg" style={{ color: "#1A0A3D" }}>บริการ PayX</h2>
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          {[
+            { icon: <Zap size={20} style={{ color: "#F59E0B" }} />, label: "จ่ายบิล", href: "/bills", bg: "#FEF3C7", border: "#FDE68A" },
+            { icon: <Phone size={20} style={{ color: "#3B82F6" }} />, label: "โทรศัพท์", href: "/bills", bg: "#DBEAFE", border: "#BFDBFE" },
+            { icon: <Car size={20} style={{ color: "#7C3AED" }} />, label: "Taxi", href: "/taxi", bg: "#EDE9FE", border: "#DDD6FE" },
+            { icon: <Store size={20} style={{ color: "#10B981" }} />, label: "ร้านค้า", href: "/merchant", bg: "#D1FAE5", border: "#A7F3D0" },
+          ].map((s) => (
+            <Link key={s.label} href={s.href}
+              className="flex flex-col items-center gap-2 active:scale-95 transition-transform">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                style={{ background: s.bg, border: `1.5px solid ${s.border}` }}>
+                {s.icon}
+              </div>
+              <span className="text-xs font-semibold text-center" style={{ color: "#6B7280" }}>{s.label}</span>
+            </Link>
+          ))}
+        </div>
+
+        {/* PayX Taxi highlight */}
+        <Link href="/taxi">
+          <div className="mt-3 rounded-2xl p-4 flex items-center gap-3 active:scale-98 transition-transform"
+            style={{ background: "linear-gradient(125deg, #EDE9FE, #F5F3FF)", border: "1.5px solid rgba(124,58,237,0.15)" }}>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#7C3AED" }}>
+              <Car size={20} className="text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="font-black text-sm" style={{ color: "#1A0A3D" }}>PayX Taxi</p>
+              <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>จ่ายค่าแท็กซี่ผ่าน PayX ไม่ต้องสแกน QR</p>
+            </div>
+            <div className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: "#7C3AED", color: "white" }}>ใหม่</div>
+          </div>
+        </Link>
+
+        {/* Merchant / Credit highlight */}
+        <Link href="/merchant">
+          <div className="mt-2 rounded-2xl p-4 flex items-center gap-3 active:scale-98 transition-transform"
+            style={{ background: "linear-gradient(125deg, #D1FAE5, #ECFDF5)", border: "1.5px solid rgba(16,185,129,0.2)" }}>
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#10B981" }}>
+              <Store size={20} className="text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="font-black text-sm" style={{ color: "#1A0A3D" }}>PayX for Business</p>
+              <p className="text-xs mt-0.5" style={{ color: "#9CA3AF" }}>สินเชื่อร้านอาหาร & คนขับแท็กซี่</p>
+            </div>
+            <ChevronRight size={16} style={{ color: "#10B981" }} />
+          </div>
+        </Link>
       </div>
 
       {/* ── Featured Banner ── */}
