@@ -124,43 +124,47 @@ export default function TaxiPage() {
 
         {/* ── Fare ── */}
         {step === "fare" && (
-          <div className="space-y-4 fade-up">
+          <div className="space-y-4">
             {/* Driver card */}
-            <div className="bg-white rounded-2xl p-4 flex items-center gap-3"
+            <div className="bg-white rounded-2xl p-4 overflow-hidden"
               style={{ boxShadow: "0 2px 8px rgba(124,58,237,0.06)", border: "1.5px solid #D1FAE5" }}>
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0"
-                style={{ background: "#EDE9FE" }}>🧑‍✈️</div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="font-black text-sm" style={{ color: "#1A0A3D" }}>{driver.name}</p>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                    style={{ background: "#D1FAE5", color: "#065F46" }}>✓ ยืนยัน</span>
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0"
+                  style={{ background: "#EDE9FE" }}>🧑‍✈️</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="font-black text-sm" style={{ color: "#1A0A3D" }}>{driver.name}</p>
+                    <span className="text-xs font-bold px-2 py-0.5 rounded-full shrink-0"
+                      style={{ background: "#D1FAE5", color: "#065F46" }}>✓ ยืนยัน</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-xs font-bold flex items-center gap-0.5" style={{ color: "#F59E0B" }}>
+                      <Star size={10} fill="currentColor" />{driver.rating}
+                    </span>
+                    <span className="text-xs" style={{ color: "#9CA3AF" }}>{driver.trips.toLocaleString()} เที่ยว</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs font-bold flex items-center gap-0.5" style={{ color: "#F59E0B" }}>
-                    <Star size={10} fill="currentColor" />{driver.rating}
-                  </span>
-                  <span className="text-xs" style={{ color: "#9CA3AF" }}>{driver.trips.toLocaleString()} เที่ยว</span>
-                  <span className="text-xs" style={{ color: "#9CA3AF" }}>· {driver.payxId}</span>
-                </div>
+                <Check size={18} className="shrink-0" style={{ color: "#10B981" }} />
               </div>
-              <Check size={20} style={{ color: "#10B981" }} />
             </div>
 
             {/* Amount */}
-            <div className="bg-white rounded-2xl p-5" style={{ boxShadow: "0 2px 8px rgba(124,58,237,0.06)" }}>
+            <div className="bg-white rounded-2xl p-5 overflow-hidden"
+              style={{ boxShadow: "0 2px 8px rgba(124,58,237,0.06)" }}>
               <p className="text-xs font-semibold mb-3" style={{ color: "#9CA3AF" }}>ค่าโดยสาร (บาท)</p>
-              <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-3xl font-black" style={{ color: "#D1D5DB" }}>฿</span>
-                <input value={fare} onChange={(e) => setFare(e.target.value.replace(/\D/, ""))}
-                  placeholder="0" type="number"
-                  className="text-5xl font-black outline-none flex-1"
-                  style={{ color: "#1A0A3D" }} autoFocus />
+              <div className="mb-4">
+                <div className="flex items-center">
+                  <span className="text-2xl font-black mr-2" style={{ color: "#D1D5DB" }}>฿</span>
+                  <input value={fare} onChange={(e) => setFare(e.target.value.replace(/\D/, ""))}
+                    placeholder="0" type="number" inputMode="numeric"
+                    className="text-5xl font-black outline-none w-full min-w-0"
+                    style={{ color: "#1A0A3D" }} autoFocus />
+                </div>
               </div>
-              <div className="flex gap-2">
+              <div className="grid grid-cols-5 gap-2">
                 {["50", "80", "100", "150", "200"].map((a) => (
                   <button key={a} onClick={() => setFare(a)}
-                    className="flex-1 py-2 rounded-xl text-sm font-bold transition-all"
+                    className="py-2 rounded-xl text-sm font-bold transition-all"
                     style={{ background: fare === a ? "#7C3AED" : "#EDE9FE", color: fare === a ? "white" : "#7C3AED" }}>
                     {a}
                   </button>
